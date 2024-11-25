@@ -1,6 +1,6 @@
 window.onload = () => {
     // Crear tarjetas
-    // crearTarjetas(filosofos)
+    crearTarjetas(filosofos)
 
     // Crear handlers para los botones de control
     let botonCrearTarjeta = document.querySelector('.create-btn');
@@ -38,19 +38,19 @@ function crearTarjetas(filosofos) {
         // Añadimos info del país a filaInfo
         let paisInfo = document.createElement('div');
         paisInfo.classList.add('info-pais');
-        paisInfo.innerHTML = '<img src="${filosofo.pais.bandera}" alt="Bandera de ${filosofo.pais.nombre}"> <span class="pais">${filosofo.pais.nombre}</span>';
+        paisInfo.innerHTML = `<img src="${filosofo.pais.bandera}" alt="Bandera de ${filosofo.pais.nombre}"> <span class="pais">${filosofo.pais.nombre}</span>`;
         filaInfo.append(paisInfo);
 
         // Añadimos info de la corriente a filaInfo
         let corrienteInfo = document.createElement('div');
         corrienteInfo.classList.add('info-corriente');
-        corrienteInfo.innerHTML = '<span>Corriente: </span><span class="corriente">${filosofo.corriente}</span>';
+        corrienteInfo.innerHTML = `<span>Corriente: </span><span class="corriente">${filosofo.corriente}</span>`;
         filaInfo.append(corrienteInfo);
 
         // Añadimos info del arma a filaInfo
         let armaInfo = document.createElement('div');
         armaInfo.classList.add('info-arma');
-        armaInfo.innerHTML = '<span>Arma: </span><span class="arma">${filosofo.arma}</span>';
+        armaInfo.innerHTML = `<span>Arma: </span><span class="arma">${filosofo.arma}</span>`;
         filaInfo.append(armaInfo);
 
         // Añadimos caja de habilidades
@@ -68,7 +68,7 @@ function crearTarjetas(filosofos) {
             // 1.Icono de habilidad
             let icono = document.createElement('img');
             icono.src = "https://via.placeholder.com/16"; 
-            icono.alt = 'Icono de ${infoHabilidad.habilidad}';
+            icono.alt = `Icono de ${infoHabilidad.habilidad}`;
             skill.append(icono);
 
             // 2.Etiqueta de habilidad
@@ -83,7 +83,7 @@ function crearTarjetas(filosofos) {
 
             let barra = document.createElement('div');
             barra.classList.add('level');
-            barra.style.width = '${infoHabilidad.nivel * 20}%';
+            barra.style.width = `${infoHabilidad.nivel * 20}%`;
             barraContainer.append(barra);
             skill.append(barraContainer);
             habilidades.append(skill);
