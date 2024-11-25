@@ -7,10 +7,17 @@ window.onload = () => {
     botonCrearTarjeta.addEventListener('click', crearNuevaTarjeta);
 
     // Sort
-    let botonOrdenarAZ = document.querySelectorAll('.sort-btn')[0];
-    let botonOrdenarZA = document.querySelectorAll('.sort-btn')[1];
-    botonOrdenarAZ.addEventListener('click', ordenarNombreAZ);
-    botonOrdenarZA.addEventListener('click', ordenarNombreZA);
+    let botonesOrdenar = document.querySelectorAll('.sort-btn');
+    botonesOrdenar[0].addEventListener('click', ordenarNombreAZ);
+    botonesOrdenar[1].addEventListener('click', ordenarNombreZA);
+
+    // Guardar
+    let botonGuardar = document.querySelector('.save-btn');
+    botonGuardar.addEventListener('click', guardarTarjetas);
+
+    // Cargar
+    let botonCargar = document.querySelector('.load-btn');
+    botonCargar.addEventListener('click', cargarTarjetas);
 }
 
 function crearTarjetas(filosofos) {
@@ -182,11 +189,21 @@ function parsearTarjetas(tarjetas) {
         filosofo.imagen = tarjeta.querySelector('.photo').src;
         filosofo.pais = {};
         // Completar funció
+        filosofo.pais.nombre = tarjeta.querySelector('.pais').innerHTML;
+        filosofo.pais.bandera = tarjeta.querySelector('.info-pais img').src;
+        filosofo.corriente = tarjeta.querySelector('.corriente').innerHTML;
+        filosofo.arma = tarjeta.querySelector('.arma').innerHTML;
 
         let habilidades = tarjeta.querySelectorAll('.skill');
+        filosofo.habilidades = []; 
         for (let habilidad of habilidades) {
             let habilidadParaGuardar = {};
             // Completar funció
+            habilidadParaGuardar.habilidad = habilidad.querySelector('.skill-name').innerHTML;
+            let barraNivel = habilidad.querySelector('.level').style.width;
+            habilidadParaGuardar.nivel = parseFloat(barraNivel) / 20;
+            
+            filosofo.habilidades.push(habilidadParaGuardar);
         }
         filosofosParseados.push(filosofo);
     }
@@ -200,6 +217,13 @@ function guardarTarjetas() {
 
 
 function cargarTarjetas() {
+    let tarjetasGuardadas = JSON.parse(localStorage.getItem('tarjetas'));
+
+    if (tarjetasGuardadas) {
+        crearTarjetas(tarjetasGuardadas);
+    } else {
+        console.log("No hay tarjetas guardadas");
+    }
 }
 
 const filosofos = [
