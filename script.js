@@ -105,6 +105,7 @@ function eliminarTarjeta() {
     this.parentNode.remove();
 }
 
+
 function ordenarNombreAZ() {
     let tarjetas = Array.from(document.querySelectorAll('.card'));
     let tarjetasOrdenadas = tarjetas.sort((tarjetaA, tarjetaB) => {
@@ -114,6 +115,7 @@ function ordenarNombreAZ() {
     });
 
     // Eliminar totes les targetes de l'array 'tarjeta'
+    
     // Completar codi
 
     // Afegir 'tarjetasOrdenadas' al contenidor de cards
@@ -132,8 +134,23 @@ function crearNuevaTarjeta(event) {
     nuevoFilosofo.pais = {};
     nuevoFilosofo.pais.nombre = document.querySelector('.create-card-form .pais').value;
     // Completar la función
+    nuevoFilosofo.pais.bandera = document.querySelector('.create-card-form .bandera').value;
+    nuevoFilosofo.corriente = document.querySelector('.create-card-form .corriente').value;
+    nuevoFilosofo.arma = document.querySelector('.create-card-form .arma').value;
 
+    let habilidadesInputs = document.querySelectorAll('.create-card-form .skills');
+    const nombresHabilidades = ["Sabiduría", "Oratoria", "Lógica", "Innovación"];
+
+    nuevoFilosofo.habilidades = [];
+    habilidadesInputs.forEach((input, index) => {
+        nuevoFilosofo.habilidades.push({
+            habilidad: nombresHabilidades[index], 
+            nivel: parseInt(input.value)
+        });
+    });
+    
     // crearTarjetas(nuevoFilosofo);
+    crearTarjetas([nuevoFilosofo]); 
 }
 
 function parsearTarjetas(tarjetas) {
