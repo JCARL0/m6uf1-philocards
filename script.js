@@ -4,7 +4,7 @@ window.onload = () => {
 
     // Crear handlers para los botones de control
     let botonCrearTarjeta = document.querySelector('.create-btn');
-    botonCrearTarjeta.addEventListener('click',crearNuevaTarjeta);
+    botonCrearTarjeta.addEventListener('click', crearNuevaTarjeta);
 }
 
 function crearTarjetas(filosofos) {
@@ -15,7 +15,7 @@ function crearTarjetas(filosofos) {
         // Creamos imagen
         let imagen = document.createElement('img');
         imagen.src = filosofo.imagen;
-        imagen.alt = `Foto de ${filosofo.nombre}`;
+        imagen.alt = 'Foto de ${filosofo.nombre}';
         imagen.classList.add("photo");
         tarjeta.append(imagen);
 
@@ -23,40 +23,78 @@ function crearTarjetas(filosofos) {
         let info = document.createElement('div');
         info.classList.add('card-info');
         tarjeta.append(info);
+
         // Creamos título
         let titulo = document.createElement('h3');
         titulo.classList.add('nombre');
         titulo.innerHTML = filosofo.nombre;
         info.append(titulo);
+
         // Creamos fila de información (info-row)
         let filaInfo = document.createElement('div');
         filaInfo.classList.add('info-row');
         info.append(filaInfo);
 
         // Añadimos info del país a filaInfo
-        
+        let paisInfo = document.createElement('div');
+        paisInfo.classList.add('info-pais');
+        paisInfo.innerHTML = '<img src="${filosofo.pais.bandera}" alt="Bandera de ${filosofo.pais.nombre}"> <span class="pais">${filosofo.pais.nombre}</span>';
+        filaInfo.append(paisInfo);
+
         // Añadimos info de la corriente a filaInfo
-        
+        let corrienteInfo = document.createElement('div');
+        corrienteInfo.classList.add('info-corriente');
+        corrienteInfo.innerHTML = '<span>Corriente: </span><span class="corriente">${filosofo.corriente}</span>';
+        filaInfo.append(corrienteInfo);
+
         // Añadimos info del arma a filaInfo
-        
+        let armaInfo = document.createElement('div');
+        armaInfo.classList.add('info-arma');
+        armaInfo.innerHTML = '<span>Arma: </span><span class="arma">${filosofo.arma}</span>';
+        filaInfo.append(armaInfo);
 
         // Añadimos caja de habilidades
         let habilidades = document.createElement('div');
         habilidades.classList.add('skills');
         info.append(habilidades);
+
         // Añadimos una a una las habilidades
         for (let infoHabilidad of filosofo.habilidades) {
             // Añadimos una caja de habilidad
-            
+            let skill = document.createElement('div');
+            skill.classList.add('skill')
+
             // Añadimos contenido caja de habilidad
             // 1.Icono de habilidad
-            
+            let icono = document.createElement('img');
+            icono.src = "https://via.placeholder.com/16"; 
+            icono.alt = 'Icono de ${infoHabilidad.habilidad}';
+            skill.append(icono);
+
             // 2.Etiqueta de habilidad
-            
-            // 2.Barra de habilidad
-            
+            let etiqueta = document.createElement('span');
+            etiqueta.classList.add('skill-name');
+            etiqueta.innerHTML = infoHabilidad.habilidad;
+            skill.append(etiqueta); 
+
+            // 3. Barra de habilidad
+            let barraContainer = document.createElement('div');
+            barraContainer.classList.add('skill-bar');
+
+            let barra = document.createElement('div');
+            barra.classList.add('level');
+            barra.style.width = '${infoHabilidad.nivel * 20}%';
+            barraContainer.append(barra);
+            skill.append(barraContainer);
+            habilidades.append(skill);
         }
 
+        let botonEliminar = document.createElement('div');
+        botonEliminar.innerHTML = '&#x2716';
+        botonEliminar.classList.add('botonEliminar');
+        botonEliminar.addEventListener('click', eliminarTarjeta);
+        tarjeta.append(botonEliminar);
+        
         // Añadimos tarjeta creada al contenedor de tarjetas
         let contenedor = document.querySelector('.cards-container');
         contenedor.append(tarjeta);
@@ -64,6 +102,7 @@ function crearTarjetas(filosofos) {
 }
 
 function eliminarTarjeta() {
+    this.parentNode.remove();
 }
 
 function ordenarNombreAZ() {
@@ -97,17 +136,17 @@ function crearNuevaTarjeta(event) {
     // crearTarjetas(nuevoFilosofo);
 }
 
-function parsearTarjetas(tarjetas){
+function parsearTarjetas(tarjetas) {
     let filosofosParseados = [];
-    for (let tarjeta of tarjetas){
+    for (let tarjeta of tarjetas) {
         let filosofo = {};
         filosofo.nombre = tarjeta.querySelector('.nombre').innerHTML;
         filosofo.imagen = tarjeta.querySelector('.photo').src;
         filosofo.pais = {};
         // Completar funció
-        
+
         let habilidades = tarjeta.querySelectorAll('.skill');
-        for (let habilidad of habilidades){
+        for (let habilidad of habilidades) {
             let habilidadParaGuardar = {};
             // Completar funció
         }
@@ -116,9 +155,9 @@ function parsearTarjetas(tarjetas){
     return filosofosParseados;
 }
 
-function guardarTarjetas(){
+function guardarTarjetas() {
     let tarjetas = Array.from(document.querySelectorAll('.card'));
-    localStorage.setItem('tarjetas',JSON.stringify(parsearTarjetas(tarjetas)));
+    localStorage.setItem('tarjetas', JSON.stringify(parsearTarjetas(tarjetas)));
 }
 
 
@@ -289,3 +328,9 @@ const filosofos = [
         ]
     }
 ]
+
+
+
+
+
+
